@@ -81,6 +81,14 @@ public abstract class BaseMsgTrackingModule extends BaseProcessorModule implemen
         map.put(FIELDS.CONTENT_TRANSFER_ENCODING, msg.getHeader("Content-Transfer-Encoding"));
         map.put(FIELDS.MDN_MODE, (msg.getPartnership().isAsyncMDN() ? "ASYNC" : "SYNC"));
 
+        try {
+            if (msg.getData() != null && msg.getData().getContent() != null) {
+                map.put(FIELDS.CONTENT, msg.getData().getContent().toString());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         return map;
     }
 
@@ -107,6 +115,7 @@ public abstract class BaseMsgTrackingModule extends BaseProcessorModule implemen
         public static final String STATE_MSG = "state_msg";
         public static final String CREATE_DT = "create_dt";
         public static final String UPDATE_DT = "update_dt";
+        public static final String CONTENT = "content";
     }
 
 }
