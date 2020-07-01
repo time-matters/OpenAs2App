@@ -179,8 +179,6 @@
 
       <module enabled="$properties.module.S3TrackingModule.enabled$"
               classname="org.openas2.processor.msgtracking.S3TrackingModule"
-              bucket="customs-broker-test"
-              secretkey="AKIAJ5MBBXSHC776KE6Q"
-              accesskey="ysFSy7uTxl1yeBBJSiOXM0Zy2VyJs5ZaNDP3fWHI"/>
+              bucket="customs-broker-test"/>
    </processor>
 </openas2>
