@@ -11,8 +11,8 @@ RUN unzip /as2/OpenAS2Server-2.10.0.zip -d /as2
 RUN rm /as2/OpenAS2Server-2.10.0.zip
 
 # install aws credentials
-RUN mkdir ~/.aws
-COPY credentials ~/.aws/credentials
+RUN mkdir /.aws
+COPY credentials /.aws/credentials
 COPY config.xml /as2/config/config.xml
 
 RUN chmod +x /as2/bin/*
