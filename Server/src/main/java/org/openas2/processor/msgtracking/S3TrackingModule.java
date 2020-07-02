@@ -2,6 +2,10 @@ package org.openas2.processor.msgtracking;
 
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.SdkClientException;
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.AWSCredentialsProvider;
+import com.amazonaws.auth.profile.ProfileCredentialsProvider;
+import com.amazonaws.auth.profile.ProfilesConfigFile;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
@@ -40,7 +44,18 @@ public class S3TrackingModule extends BaseMsgTrackingModule {
 
             //This code expects that you have AWS credentials set up per:
             // https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/setup-credentials.html
-            s3Client = AmazonS3ClientBuilder.standard().withRegion(Regions.fromName(region)).build();
+            s3Client = AmazonS3ClientBuilder.standard().withRegion(Regions.fromName(region)).withCredentials(new AWSCredentialsProvider() {
+                @Override
+                public AWSCredentials getCredentials() {
+                    return new ProfileCredentialsProvider(
+                        new ProfilesConfigFile("/.aws/credentials"), "default").getCredentials();
+                }
+
+                @Override
+                public void refresh() {
+
+                }
+            }).build();
 
         } catch (Exception e) {
             logger.error(e.getMessage());
