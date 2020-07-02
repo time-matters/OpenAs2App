@@ -23,11 +23,10 @@ public class S3TrackingModule extends BaseMsgTrackingModule {
 
     private Log logger = LogFactory.getLog(S3TrackingModule.class.getSimpleName());
 
-    public final static String PARAM_REGION = "region";
-    public final static String PARAM_BUCKET = "bucket";
+    private final static String PARAM_REGION = "region";
+    private final static String PARAM_BUCKET = "bucket";
 
     private String bucket = null;
-    private String region = null;
 
     private AmazonS3 s3Client;
 
@@ -35,7 +34,7 @@ public class S3TrackingModule extends BaseMsgTrackingModule {
     public void init(Session session, Map<String, String> parameters) throws OpenAS2Exception {
         super.init(session, parameters);
         bucket = getParameter(PARAM_BUCKET, true);
-        region = getParameter(PARAM_REGION, true);
+        String region = getParameter(PARAM_REGION, true);
 
         try {
 
@@ -44,7 +43,7 @@ public class S3TrackingModule extends BaseMsgTrackingModule {
             s3Client = AmazonS3ClientBuilder.standard().withRegion(Regions.fromName(region)).build();
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
     }
 
@@ -68,11 +67,11 @@ public class S3TrackingModule extends BaseMsgTrackingModule {
             logger.info("Put " + as2Msg.getLogMsgID() + " in bucket " + bucket);
 
         } catch (AmazonServiceException e) {
-            e.printStackTrace();
+            logger.error("AmazonServiceException: " + e.getMessage());
         } catch (SdkClientException e) {
-            e.printStackTrace();
+            logger.error("SdkClientException: " + e.getMessage());
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
     }
 
@@ -93,6 +92,6 @@ public class S3TrackingModule extends BaseMsgTrackingModule {
 
     @Override
     public boolean healthcheck(List<String> failures) {
-        return s3Client.doesBucketExistV2(PARAM_BUCKET);
+        return s3Client!=null && s3Client.doesBucketExistV2(bucket);
     }
 }
