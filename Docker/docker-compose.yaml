@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  openas2:
+    # restart: always
+    image: openas2-server:1.0.0
+    ports:
+      - "10080:10080"
+      - "9092:9092"
+    command:
+      - /as2/bin/start-openas2.sh
