@@ -24,11 +24,12 @@
                module.AS2ReceiverModule.https.enabled="false"
                module.AS2MDNReceiverModule.https.enabled="false"
                module.HealthCheckModule.enabled="false"
-               module.S3TrackingModule.enabled="true"
+
+               module.S3TrackingModule.enabled="false"
+               module.RedisTrackingModule.enabled="true"
                />
    <certificates classname="org.openas2.cert.PKCS12CertificateFactory"
                  filename="%home%/as2_certs.p12"
-                 password="testas2"
                  interval="300"/>
    <partnerships classname="org.openas2.partner.XMLPartnershipFactory"
                  filename="%home%/partnerships.xml"
@@ -179,6 +180,9 @@
 
       <module enabled="$properties.module.S3TrackingModule.enabled$"
               classname="org.openas2.processor.msgtracking.S3TrackingModule"
+              region="eu-central-1"
               bucket="customs-broker-test"/>
+      <module enabled="$properties.module.RedisTrackingModule.enabled$"
+              classname="org.openas2.processor.msgtracking.RedisTrackingModule"/>
    </processor>
 </openas2>
