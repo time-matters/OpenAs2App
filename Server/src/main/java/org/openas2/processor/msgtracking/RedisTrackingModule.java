@@ -24,13 +24,9 @@ public class RedisTrackingModule extends BaseMsgTrackingModule {
 
     private Log logger = LogFactory.getLog(RedisTrackingModule.class.getSimpleName());
 
-    public final static String PARAM_HOST = "host";
-    public final static String PARAM_PORT = "port";
-    public final static String PARAM_PW = "pw";
-
-    private String host = null;
-    private String port = null;
-    private String password = null;
+    private final static String PARAM_HOST = "host";
+    private final static String PARAM_PORT = "port";
+    private final static String PARAM_PW = "pw";
 
     private RedisClient redisClient;
     private StatefulRedisConnection<String, String> connection;
@@ -38,9 +34,9 @@ public class RedisTrackingModule extends BaseMsgTrackingModule {
     @Override
     public void init(Session session, Map<String, String> parameters) throws OpenAS2Exception {
         super.init(session, parameters);
-        host = getParameter(PARAM_HOST, true);
-        port = getParameter(PARAM_PORT, true);
-        password = getParameter(PARAM_PW, true);
+        String host = getParameter(PARAM_HOST, true);
+        String port = getParameter(PARAM_PORT, true);
+        String password = getParameter(PARAM_PW, true);
 
         try {
             redisClient = RedisClient.create(
@@ -56,7 +52,7 @@ public class RedisTrackingModule extends BaseMsgTrackingModule {
             logger.info("Connected to Redis");
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
     }
 
