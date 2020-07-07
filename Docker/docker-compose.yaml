@@ -9,3 +9,15 @@ services:
       - "9092:9092"
     command:
       - /as2/bin/start-openas2.sh
+#    depends_on:
+#      - db
+
+  db:
+    image: postgres
+#    ports:
+#      - "5432:5432"
+    environment:
+      - POSTGRES_USER=cb_user
+      - POSTGRES_PASSWORD=cb_1P2a3s4s5
+      - POSTGRES_DB=openas2
+
