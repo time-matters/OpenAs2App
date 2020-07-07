@@ -1,15 +1,5 @@
 package org.openas2.processor.msgtracking;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.openas2.OpenAS2Exception;
-import org.openas2.Session;
-import org.openas2.message.Message;
-import org.openas2.params.ComponentParameters;
-import org.openas2.params.CompositeParameters;
-import org.openas2.params.ParameterParser;
-import org.openas2.util.DateUtil;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -19,6 +9,17 @@ import java.sql.Statement;
 import java.sql.Types;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.openas2.OpenAS2Exception;
+import org.openas2.Session;
+import org.openas2.message.Message;
+import org.openas2.params.ComponentParameters;
+import org.openas2.params.CompositeParameters;
+import org.openas2.params.EnvironmentParameters;
+import org.openas2.params.ParameterParser;
+import org.openas2.util.DateUtil;
 
 public class DbTrackingModule extends BaseMsgTrackingModule {
     public static final String PARAM_TCP_SERVER_START = "tcp_server_start";
@@ -56,7 +57,10 @@ public class DbTrackingModule extends BaseMsgTrackingModule {
         super.init(session, options);
         CompositeParameters paramParser = createParser();
         dbUser = getParameter(PARAM_DB_USER, true);
+        dbUser = ParameterParser.parse(dbUser, paramParser);
         dbPwd = getParameter(PARAM_DB_PWD, true);
+        dbPwd = ParameterParser.parse(dbPwd, paramParser);
+
         configBaseDir = session.getBaseDirectory();
         jdbcConnectString = getParameter(PARAM_JDBC_CONNECT_STRING, true);
         jdbcConnectString.replace("%home%", configBaseDir);
@@ -91,6 +95,7 @@ public class DbTrackingModule extends BaseMsgTrackingModule {
         CompositeParameters params = new CompositeParameters(true);
 
         params.add("component", new ComponentParameters(this));
+        params.add("environment", new EnvironmentParameters());
         return params;
     }
 
