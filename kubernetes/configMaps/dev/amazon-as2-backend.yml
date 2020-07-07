@@ -1,0 +1,8 @@
+apiVersion: v1
+data:
+  # todo
+  DATABASE_URL: jdbc:postgresql://tm-postgres.default:5432/mail_templater?sslmode=require
+kind: ConfigMap
+metadata:
+  name: amazon-as2-backend-config
+  namespace: customs-broker
