@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>net.sf.openas2</groupId>
     <artifactId>OpenAS2</artifactId>
-    <version>2.10.1</version>
+    <version>2.10.3</version>
     <name>OpenAS2</name>
     <packaging>pom</packaging>
 
@@ -153,9 +153,14 @@
             <id>ossrh</id>
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </snapshotRepository>
+<!--        <repository>-->
+<!--            <id>ossrh</id>-->
+<!--            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>-->
+<!--        </repository>-->
+
         <repository>
-            <id>ossrh</id>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+            <id>sharedlib</id>
+            <url>https://pkgs.dev.azure.com/time-matters/cb-amazon/_packaging/sharedlib/maven/v1</url>
         </repository>
     </distributionManagement>
 
